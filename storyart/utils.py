@@ -37,29 +37,32 @@ def check_gpu_memory(memory):
 
 def chat(model, tokenizer, query, history):
 
-    conversation = []
-    
-    for query_h, response_h in history:
-        conversation.append({"role": "user", "content": query_h})
-        conversation.append({"role": "assistant", "content": response_h})
-    conversation.append({"role": "user", "content": query})
-    input_text = tokenizer.apply_chat_template(
-        conversation,
-        add_generation_prompt=True,
-        tokenize=False,
-    )
-    model_inputs = tokenizer([input_text], return_tensors="pt").to(model.device)
+    if hasattr(model, 'chat'):
+        return model.chat(tokenizer, query, history=history)
+    else:
+        conversation = []
+        
+        for query_h, response_h in history:
+            conversation.append({"role": "user", "content": query_h})
+            conversation.append({"role": "assistant", "content": response_h})
+        conversation.append({"role": "user", "content": query})
+        input_text = tokenizer.apply_chat_template(
+            conversation,
+            add_generation_prompt=True,
+            tokenize=False,
+        )
+        model_inputs = tokenizer([input_text], return_tensors="pt").to(model.device)
 
-    generated_ids = model.generate(
-        model_inputs.input_ids,
-        max_new_tokens=512
-    )
-    generated_ids = [
-        output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-    ]
+        generated_ids = model.generate(
+            model_inputs.input_ids,
+            max_new_tokens=512
+        )
+        generated_ids = [
+            output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+        ]
 
-    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
-    history.append((query, response))
+        history.append((query, response))
 
-    return response, history
+        return response, history

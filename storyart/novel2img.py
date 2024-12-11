@@ -38,12 +38,11 @@ class Novel2Img():
         self.config_path = config_path
         print_logger("start init")
         self.img_device = img_device
-        self.img_model = FluxPipeline.from_pretrained(
+        self.img_model = DiffusionPipeline.from_pretrained(
             img_path,
-            # variant="fp16",
             torch_dtype=torch.float16
         ).to(img_device)
-        # self.img_model.scheduler = EulerAncestralDiscreteScheduler.from_config(self.img_model.scheduler.config)
+        self.img_model.scheduler = EulerAncestralDiscreteScheduler.from_config(self.img_model.scheduler.config)
 
 
         if self.lowvarm:
@@ -298,8 +297,8 @@ class Novel2Img():
 
         # 1. describe to images
         imgs = self.img_model(prompt=prompt,
-                            #    negative_prompt=negative_prompt,
-                                num_inference_steps=steps, num_images_per_prompt=batch_size,guidance_scale=3.5,
+                               negative_prompt=negative_prompt,
+                                num_inference_steps=steps, num_images_per_prompt=batch_size,guidance_scale=7,
                                 height=height, width=width).images
         imgs = [np.array(img,dtype=np.uint8) for img in imgs]
         
