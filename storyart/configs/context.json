@@ -1,0 +1,22 @@
+[
+    {
+      "name": "都市",
+      "prompt": "",
+      "negative_prompt": ""
+    },
+    {
+      "name": "现代",
+      "prompt": "",
+      "negative_prompt":""
+    },
+    {
+        "name": "古代",
+        "prompt": "ancient, traditional clothing, hanfu",
+        "negative_prompt": ""
+      },
+    {
+    "name": "悬疑",
+    "prompt": "",
+    "negative_prompt": ""
+    }
+]

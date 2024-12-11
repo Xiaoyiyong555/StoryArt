@@ -1,0 +1,66 @@
+prompt:
+  
+  read_novel:
+    user: |
+          请阅读以下小说内容：
+          {novel}
+          明白了请回答是
+    anw: 好的，我已经阅读了小说的内容。有什么我能帮你回答的问题吗？
+  
+  image_example:
+    user: |
+          请记住图像描述的表现方式，以下是一些例子：
+          【"a realistic painting of an athletic young woman with a compound bow, the young woman is wearing cargo shorts, a pink top, black gloves, and has long blonde hair in a ponytail with an iridescent hair tie. The woman is aiming the bow at a target on a tropical beach. Sparkling waves crash on the shorline",
+          "Voynich manuscript illustrating an intense scene where a magician, with a staff in hand, is fleeing from a lurking monster that has appeared from the depths of a cave. The ancient parchment is frayed at the edges, with sections that have been lost to time, rendering them unreadable. Some parts of the manuscript are marked with distinct red droplets.",
+          "a realistic painting of a woman running from a T-Rex on a tropical beach lined with prehistoric palm trees. Waves crash along the beach. The woman has her hair in a ponytail",
+          "a realistic painting of an athletic young woman with a compound bow, the young woman is wearing cargo shorts, a pink top, black gloves, and has long blonde hair in a ponytail with an iridescent hair tie. The woman is aiming the bow at a target on a tropical beach. Sparkling waves crash on the shorline"】
+          明白了请回答是
+    anw: 是的，我已经记住这些图像描述的表现方式。
+
+  info_extract:
+    user: |
+          请回答下面这句话的主角与发生的地点：
+          {line}
+          回答格式：
+          {{"character": "main character", "scene": "scene" }}
+          如果上文没有提及地点或者主角则返回"无"
+    anw:
+  
+  character_prompt:
+    user: |
+          请根据名字：{name}
+          想象其年龄性别，发型发色，服装及颜色
+          例子1: {{"sex": "young man", "hair":"black short hair", "clothes": "black t-shirt"}}
+          例子2: {{"sex": "middle women", "hair":"red long hair", "clothes": "white dress"}}
+          例子3: {{"sex": "young woman", "hair": "brown wavy hair", "clothes": "blue jeans and a red sweater"}}
+          例子4: {{"sex": "older woman", "hair": "gray bun", "clothes": "floral print dress"}}
+          性别请从以下几个选项选择: ["young man", "middel age man", "old man", "young women", "middel age woman", "old woman"]
+          回答格式：{{"sex": "sex", "hair": "hair", "clothes": "clohtes and color"}} # english
+          请按回答格式回答
+          
+    anw:
+
+  scene_prompt:
+    user: |
+          请给下面的场景提供图像描述词
+          回答格式：{{"image_prompt":"image_prompt"}} # english
+          场景：{scene}
+    anw:
+  
+  pose_prompt:
+    user: |
+          请根据下面这句话用一个词预测插画中{character}在干什么：
+          {line}
+          回答格式：{{"answer": "answer"}} # an english word
+    anw:
+  
+  image_prompt:
+    user: |
+          请给以下主角与场景内容配一幅{fongge}插画，并对插画进行图像描述
+          主角是：{character}，故事场景是：{scene}
+          回答格式：{{"img_description": img_description}} # img_description is english
+          小说片段：
+          {{line}}
+    anw:
+
+  
